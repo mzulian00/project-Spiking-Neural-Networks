@@ -1,6 +1,6 @@
 use crate::neuron::Neuron;
 use crate::errors::ConfErr;
-use rand::{thread_rng, Rng};
+use rand::{rng, Rng};
 
 #[derive(Clone)]
 pub struct Layer{
@@ -43,22 +43,22 @@ impl Layer{
     }
 
     pub fn generate_weight(n_neurons: i32, n_neurons_pre: i32, id: i32) -> (Vec<f64>, Vec<f64>){
-        let mut rng = thread_rng();
+        let mut rng = rng();
         let mult = 17.0;
         let mut weights_same = Vec::new();
         for _ in 0..n_neurons-1{
-            weights_same.push(  -rng.gen::<f64>()*mult/2.0 );
+            weights_same.push(  -rng.random::<f64>()*mult/2.0 );
         }
 
         let mut weights_prec = Vec::new();
         if n_neurons_pre == -1{
             for j in 0..n_neurons{
-                weights_prec.push( if j == id { rng.gen::<f64>()*mult }else{ 0.0 });
+                weights_prec.push( if j == id { rng.random::<f64>()*mult }else{ 0.0 });
             }
         }
         else {
             for _ in 0..n_neurons_pre{
-                weights_prec.push( rng.gen::<f64>()*mult );
+                weights_prec.push( rng.random::<f64>()*mult );
             }
         }
         (weights_prec, weights_same)

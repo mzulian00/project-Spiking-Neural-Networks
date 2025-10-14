@@ -186,10 +186,10 @@ pub fn compute_differences2(right: &Vec<Vec<u8>>, output: &Vec<Vec<u8>>) -> usiz
 }
 
 pub fn gen_inputs( n_input: usize)-> Vec<u8>{
-    let mut rnd = rand::thread_rng();
+    let mut rnd = rand::rng();
     let mut input = Vec::new();
     for _ in 0..n_input{
-        input.push((rnd.gen_range(0..10) as u8)%2);
+        input.push((rnd.random_range(0..10) as u8)%2);
     }
     input
 }

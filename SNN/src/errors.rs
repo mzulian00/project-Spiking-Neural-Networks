@@ -1,4 +1,4 @@
-use rand::{Rng, thread_rng};
+use rand::{Rng, rng};
 use crate::network::Network;
 use std::fmt;
 
@@ -61,34 +61,34 @@ impl ConfErr{
             return ConfErr::no_errors();
         }
 
-        let mut rng = thread_rng();
+        let mut rng = rng();
         let mut t_start = 0;
-        let err_c = err_comp[rng.gen_range(0..err_comp.len())];
+        let err_c = err_comp[rng.random_range(0..err_comp.len())];
 
         if err_type == Type::BitFlip {
-            t_start = rng.gen_range(0..time-1) as i32;
+            t_start = rng.random_range(0..time-1) as i32;
         }
-        let id_neuron = rng.gen_range(0..network.n_neurons);
+        let id_neuron = rng.random_range(0..network.n_neurons);
 
         let index;
-        let vec = rng.gen_range(0..2);
+        let vec = rng.random_range(0..2);
 
         if err_c == ErrorComponent::Weights{
             let (layer, index_layer) = network.get_indexes(id_neuron);
             if vec==0 {//prec
                 let len = network.layers[layer].neurons[index_layer].connections_prec_layer.len();
-                index = rng.gen_range(0..len) as usize;
+                index = rng.random_range(0..len) as usize;
             }else {//same
                 let len = network.layers[layer].neurons[index_layer].connections_same_layer.len();
                 if len==0 { return ConfErr::no_errors(); }
-                index = rng.gen_range(0..len) as usize;
+                index = rng.random_range(0..len) as usize;
             }
         }else{index = 0}
 
         ConfErr{
             id_neuron,
             t_start,
-            n_bit: rng.gen_range(0..64),
+            n_bit: rng.random_range(0..64),
             err_type,
             err_comp: err_c,
             w_pos: (vec, index),

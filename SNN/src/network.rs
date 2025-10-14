@@ -38,11 +38,11 @@ impl Network{
     }
 
     pub fn add_random_neurons(&mut self, funzione: fn(&mut Neuron,&Vec<u8>,&Vec<u8>,&ConfErr,i32)->u8){
-        let mut rnd = rand::thread_rng();
+        let mut rnd = rand::rng();
         let mut id=0;
         for (index, layer) in self.layers.iter_mut().enumerate(){
             for _ in 0..self.network_conf[index]{
-                layer.add_neuron(id,-52.0+rnd.gen_range(-1.0..=1.0),-65.0+rnd.gen_range(-1.0..=1.0),-65.0+rnd.gen_range(-1.0..=1.0),-60.0+rnd.gen_range(-1.0..=1.0),funzione);
+                layer.add_neuron(id,-52.0+rnd.random_range(-1.0..=1.0),-65.0+rnd.random_range(-1.0..=1.0),-65.0+rnd.random_range(-1.0..=1.0),-60.0+rnd.random_range(-1.0..=1.0),funzione);
                 id+=1;
             }
         }
@@ -131,7 +131,7 @@ impl Network{
         let mut threads = Vec::new();
         for (layer, rec) in receiver.into_iter().enumerate() {
             let send;
-            if layer == n_layers - 1 { //ultimo layer
+            if layer == n_layers - 1 { 
                 send = sender_output.clone();
             } else {
                 send = sender[layer + 1].clone();
@@ -146,13 +146,15 @@ impl Network{
                 for time in 0..tot_time {
                     let input_prec_layer = rec.recv().unwrap();
 
-                    let output = layer_copy.compute_output(&input_prec_layer, &input_same_layer,  &error, time);
+                    let output = layer_copy.compute_output(
+                            &input_prec_layer, 
+                            &input_same_layer,  
+                                            &error, time);
 
-                    println!("thread {}, time : {}, input_same_layer : {:?}, input_prec_layer : {:?}, output : {:?}", layer, time, input_same_layer, input_prec_layer, output);
                     input_same_layer = output.clone();
+                    
                     send.send(output).unwrap();
                 }
-                layer_copy
             });
 
             threads.push(handle);
