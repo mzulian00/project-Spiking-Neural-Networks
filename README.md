@@ -22,8 +22,7 @@ The lowest-level structure is the Neuron, which stores fundamental neuron parame
 - **LIF**: *Leaky-Integrate-and-Fire* (function used to compute neuron's output)
 - Interval between consecutive input spikes (delta_t)
 
-![](imgs/neuron.png)
-
+<p align="center"><img src="imgs/neuron.png"/></p>
 ## Layer structure 
 
 Each layer runs in its own thread. Layers communicate via channels, sending vectors of outputs at time t to the next layer and receiving vectors of inputs from the previous layer calculated at time t-1.
@@ -32,21 +31,22 @@ Additionally, neurons can transmit their outputs to other neurons within the sam
 Two separate vectors store incoming weights: one for neurons from the previous layer and another for neurons in the same layer.
 Without distinguishing these connections, a deadlock could occur at the first simulation step because neurons in the same layer would wait for each other’s outputs. By assuming the initial outputs of same-layer neurons are zero at time t=0, deadlocks are avoided.
 
-![](imgs/layer.png)
+<p align="center"><img src="imgs/layer.png"/></p>
+
 ## Network structure
 Manages the creation of a configurable network, initializes each layer as a separate thread, and handles the simulation.
 
-![](imgs/network.png)
+<p align="center"><img src="imgs/network.png"/></p>
 
 ## Simulations
 ### Simulation without  errors
 For *n* inputs, the simulation computes the corresponding *n* outputs of the **SNN** asynchronously, with each layer running in its own thread.
 
 Channels set up:  
-![](imgs/send_rec.png)
+<p align="center"><img src="imgs/send_rec.png"/></p>
 
 Threads handle:  
-![](imgs/thread_spawn.png)
+<p align="center"><img src="imgs/thread_spawn.png"/></p>
 
 ### Simulation with error injection
 To evaluate the network’s resilience, controlled faults are injected into different components of the system during simulation. These faults emulate typical hardware-level errors that can occur in neuromorphic or digital computing environments.  
