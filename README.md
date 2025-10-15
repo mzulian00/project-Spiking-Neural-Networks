@@ -23,6 +23,7 @@ The lowest-level structure is the Neuron, which stores fundamental neuron parame
 - Interval between consecutive input spikes (delta_t)
 
 <p align="center"><img src="imgs/neuron.png"/></p>
+
 ## Layer structure 
 
 Each layer runs in its own thread. Layers communicate via channels, sending vectors of outputs at time t to the next layer and receiving vectors of inputs from the previous layer calculated at time t-1.
