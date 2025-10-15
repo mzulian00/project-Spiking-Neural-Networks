@@ -50,7 +50,7 @@ Threads handle:
 <p align="center"><img src="imgs/thread_spawn.png"/></p>
 
 ### Simulation with error injection
-To evaluate the network’s resilience, controlled faults are injected into different components of the system during simulation. These faults emulate typical hardware-level errors that can occur in neuromorphic or digital computing environments.  
+To evaluate the network’s resilience, controlled faults are injected into different components of the system during simulation. These faults emulate typical hardware-level errors that can occur in hardware or digital computing environments.  
 
 Errors:
 - **Stuck-at-0 / Stuck-at-1**: These represent permanent faults, where a bit in memory or a circuit output remains fixed at logic 0 or logic 1 throughout the entire simulation.  
